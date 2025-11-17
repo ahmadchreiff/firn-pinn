@@ -11,7 +11,7 @@ function GenerateFirnData()
     m  = numel(t);
 
     %-----------------------------
-    % 2. Physical parameters (Table 2 from Omar El Sagheer's paper)
+    % 2. Physical parameters (Table 2 from Omar El Sagheer's )
     %-----------------------------
     zF = 1;
     Te = 1;
@@ -24,7 +24,7 @@ function GenerateFirnData()
     % csts vector as in DirectPbResc comments
     % csts(1)=n, csts(2)=m, csts(3)=zF, csts(4)=dt,
     % csts(5)=T, csts(6)=G/f, csts(7)=1/f, csts(8)=Ma/f, csts(9)=F
-    csts    = zeros(1,9);
+    csts          = zeros(1,9);
     csts(1) = n;
     csts(2) = m;
     csts(3) = zF;
@@ -57,6 +57,7 @@ function GenerateFirnData()
     %-----------------------------
     % 5. Save to your repo
     %-----------------------------
+    % Go one level up (..) to repo root, then into data/raw
     outPath = fullfile('..', 'data', 'raw', 'firn_forward.mat');
     save(outPath, 'z', 't', 'V', 'Da', 'v0', 'csts');
 
