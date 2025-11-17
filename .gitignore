@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+
+# Logs, outputs
+results/logs/
+results/wandb/
+*.log
+
+# Data
+data/processed/
+data/matlab_forward/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS crap
+.DS_Store
