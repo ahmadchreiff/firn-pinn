@@ -1,86 +1,89 @@
-# Repository Overview
+# FIRN–PINN
 
-This repository contains the workflow for generating firn forward-model data using MATLAB and implementing a Physics-Informed Neural Network (PINN) in PyTorch.
+Physics-Informed Neural Network (PINN) implementation for the firn gas-diffusion PDE, together with the classical MATLAB forward solver used to generate reference data.
+
+This repository provides:
+- MATLAB code for the classical solution of the firn PDE.
+- A modular PyTorch-based PINN framework with clean separation between core PINN logic and firn-specific physics.
+- Reproducible training and evaluation pipelines.
 
 ---
 
 ## Directory Structure
 
-### `data/`
-Contains datasets used by the PINN.
+### `classical_solver/`
+MATLAB implementation of the forward and inverse firn solvers.
+
+- **`COEFFc.m`** — Diffusion coefficient profile.  
+- **`COEFFv.m`** — Advection velocity profile.  
+- **`DirectPbResc.m`** — Rescaled forward PDE solver.  
+- **`GenerateFirnData.m`** — Generates `firn_forward.mat`.  
+- **`InversePbRescV.m`** — Inverse problem solver (not used in the PINN MVP).  
+- **`LinearSpline.m`** — Linear interpolation routine.  
+- **`Test.m`**, **`Testnoise.m`** — Forward-solver tests.  
+- **`testinv3nonDecDifMeshfmincon.m`** — Inverse reconstruction test using optimization.
+
+---
+
+## `data/`
+Datasets used by the PINN.
 
 - **`raw/firn_forward.mat`**  
-  MATLAB-generated forward solution containing the depth grid, time grid, solution matrix, and PDE coefficients.
+  Contains: depth grid, time grid, classical solution matrix, and physical coefficients, generated via the MATLAB solver.
 
 ---
 
-### `experiments/`
-Experiment entry points.
+## `experiments/`
+Entry points for running experiments.
 
 - **`run_firn_pinn.py`**  
-  Main script that loads data, constructs the model, trains the PINN, and performs evaluation.
+  Loads data, instantiates the model, performs training, and runs evaluation.
 
 ---
 
-### `matlab/`
-MATLAB implementation of the classical firn solver and supporting utilities.
+## `src/`
+Main PyTorch PINN implementation.
 
-- **`COEFFc.m`** – Computes the diffusion coefficient profile.  
-- **`COEFFv.m`** – Computes the advection velocity profile.  
-- **`DirectPbResc.m`** – Rescaled forward PDE solver.  
-- **`GenerateFirnData.m`** – Script that generates `firn_forward.mat`.  
-- **`InversePbRescV.m`** – Inverse problem solver (not required for the PINN MVP).  
-- **`LinearSpline.m`** – Linear interpolation helper.  
-- **`Test.m`**, **`Testnoise.m`** – MATLAB test scripts.  
-- **`testinv3nonDecDifMeshfmincon.m`** – Inverse solver testing with optimization.
+### `src/core/`
+Framework-level PINN components (PDE-agnostic).
 
----
+- **`pinn_base.py`** — Training engine: sampling, optimization loop, and abstract residual hooks.  
+- **`model.py`** — MLP mapping `(z, t) → V(z, t)`.  
+- **`losses.py`** — Physics, boundary/initial condition, and supervised loss terms.  
+- **`utils.py`** — Helper utilities (sampling, scheduling, early stopping, etc.).
 
-### `src/`
-Core PyTorch implementation of the PINN.
+### `src/firn/`
+Firn-specific physics and PINN assembly.
 
-- **`__init__.py`**  
-  Marks the directory as a Python package.
+- **`firn_problem.py`** — Firn PDE definition: coefficients, grids, IC/BC, and discrete finite-difference residual operator.  
+- **`firn_data.py`** — Loads `firn_forward.mat` and exposes data structures for training and evaluation.  
+- **`firn_pinn.py`** — Connects:  
+  MLP model + firn physics + base PINN engine → complete firn PINN model.
 
-- **`direct_pinn.py`**  
-  PDE-agnostic PINN engine containing the training loop, sampling routines, and abstract residual/loss interfaces.
+### `src/evaluation/`
+Evaluation and visualization tools.
 
-- **`evaluation.py`**  
-  Evaluation utilities for computing errors against the classical solver and generating plots.
-
-- **`firn_data.py`**  
-  Loads `firn_forward.mat` and constructs grids, classical solution matrices, and optional supervised samples.
-
-- **`firn_discrete_pinn.py`**  
-  Firn-specific PINN implementation that connects the neural network with the firn PDE and computes discrete residuals and loss terms.
-
-- **`firn_problem.py`**  
-  Defines the firn PDE, coefficients, grids, initial and boundary conditions, and finite-difference residual operator. Pure physics and discretization.
-
-- **`losses.py`**  
-  Implements physics loss, IC/BC losses, supervised loss, and weighted combination of all loss terms.
-
-- **`model.py`**  
-  PyTorch MLP defining the mapping from `(z, t)` to `V(z, t)`.
-
-- **`utils.py`**  
-  Utility functions including sampling, early stopping, and general helpers.
+- **`metrics.py`** — Error metrics comparing PINN predictions to the classical solver.  
+- **`plotting.py`** — Plot generation for predictions, losses, and residuals.
 
 ---
 
 ## Repository Root
 
-- **`plot_classical.py`**  
-  Standalone script for visualizing the MATLAB classical forward solution.
+- **`plot_classical.py`** — Quick visualization of the MATLAB forward solution.  
+- **`requirements.txt`** — Python dependencies.  
+- **`.gitignore`** — Git ignore rules.  
+- **`README.md`** — Project documentation.  
+- **`venv/`** — Local virtual environment (not tracked).
 
-- **`.gitignore`**  
-  Git ignore rules.
+---
 
-- **`requirements.txt`**  
-  Python dependencies for the PINN codebase.
+## Summary
 
-- **`README.md`**  
-  Project documentation.
+This architecture cleanly separates:
+- **Physics (firn PDE)**  
+- **PINN framework (core)**  
+- **Experiments and reproducibility**  
+- **Classical solver (MATLAB baseline)**
 
-- **`venv/`**  
-  Local virtual environment (untracked).
+It supports a robust MVP now while remaining extensible for inverse PINNs, advanced losses, and alternative architectures.
