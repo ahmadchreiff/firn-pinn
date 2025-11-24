@@ -26,3 +26,7 @@ data/matlab_forward/
 
 # OS crap
 .DS_Store
+
+# Markdown
+REPO_REWRITE_PLAN.md
+CODING_ORDER.md
