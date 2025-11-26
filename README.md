@@ -1,6 +1,6 @@
 # Firn PINN
 
-Physics-informed neural network for the rescaled firn gas-diffusion problem (Eq. 33). This repository defines the PDE, sampling, losses, training loop, and plotting utilities to solve for the dimensionless gas density `rho_hat(t_hat, z_hat)` on `[0,1] x [0,1]`.
+Physics-informed neural network for the rescaled firn gas-diffusion problem. This repository defines the PDE, sampling, losses, training loop, and plotting utilities to solve for the dimensionless gas density `rho_hat(t_hat, z_hat)` on `[0,1] x [0,1]`.
 
 ## Quickstart
 
