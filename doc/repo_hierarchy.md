@@ -19,14 +19,14 @@
 │       │   ├── neural_net.py     # MLP with init, dtype/device handling, activation selection
 │       │   └── factory.py        # helper to build networks from config
 │       ├── core/
-│       │   ├── base_pinn.py      # generalized DirectPINN: sampling, loss aggregation, training loop
-│       │   └── training.py       # fit loop (early stopping, schedulers, logging callbacks)
+│       │   └── base_pinn.py      # generalized DirectPINN: sampling, loss aggregation, training loop
 │       ├── problems/
 │       │   └── firn.py           # FirnProblem implementing PDE residual + BCs + constants
 │       └── utils/
 │           ├── sampling.py       # Sobol/LHS point generation, domain mapping
 │           ├── plotting.py       # training curves, solution scatter/heatmaps (headless-safe)
 │           ├── logging.py        # console + file logging, timestamped run dirs
+│           ├── training.py       # CLI helper: load config, build problem/model, run training, save artifacts
 │           └── seed.py           # reproducibility helpers
 ├── tests/
 │   ├── test_sampling.py          # shapes/ranges for generated points

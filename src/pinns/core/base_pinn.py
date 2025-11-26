@@ -46,7 +46,13 @@ class BasePINN:
         self.model.to(self.device)
 
         lr = getattr(training, "learning_rate", getattr(training, "lr", 1e-3))
-        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=lr)
+        opt_name = str(getattr(training, "optimizer", "adam")).lower()
+        if opt_name == "lbfgs":
+            self._is_lbfgs = True
+            self.optimizer = torch.optim.LBFGS(self.model.parameters(), lr=lr, max_iter=20, line_search_fn="strong_wolfe")
+        else:
+            self._is_lbfgs = False
+            self.optimizer = torch.optim.Adam(self.model.parameters(), lr=lr)
         self.scheduler = None  # placeholder for optional schedulers
 
         self.logger = logger if logger is not None else get_logger("pinn")
@@ -149,12 +155,25 @@ class BasePINN:
 
         for epoch in range(1, num_epochs + 1):
             self.model.train()
-            self.optimizer.zero_grad()
 
-            losses = self.compute_loss()
-            loss_total = losses["loss_total"]
-            loss_total.backward()
-            self.optimizer.step()
+            if self._is_lbfgs:
+                last_losses: Dict[str, Tensor] = {}
+
+                def closure() -> Tensor:
+                    self.optimizer.zero_grad()
+                    losses_inner = self.compute_loss()
+                    last_losses.update({k: v for k, v in losses_inner.items()})
+                    losses_inner["loss_total"].backward()
+                    return losses_inner["loss_total"]
+
+                self.optimizer.step(closure)
+                losses = last_losses if last_losses else self.compute_loss()
+            else:
+                self.optimizer.zero_grad()
+                losses = self.compute_loss()
+                loss_total = losses["loss_total"]
+                loss_total.backward()
+                self.optimizer.step()
 
             if self.scheduler is not None:
                 self.scheduler.step()
