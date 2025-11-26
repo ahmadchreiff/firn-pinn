@@ -22,7 +22,6 @@
 │       │   ├── base_pinn.py      # generalized DirectPINN: sampling, loss aggregation, training loop
 │       │   └── training.py       # fit loop (early stopping, schedulers, logging callbacks)
 │       ├── problems/
-│       │   ├── base_problem.py   # abstract PDE interface (ic/bc/residual/exact_solution optional)
 │       │   └── firn.py           # FirnProblem implementing PDE residual + BCs + constants
 │       └── utils/
 │           ├── sampling.py       # Sobol/LHS point generation, domain mapping
