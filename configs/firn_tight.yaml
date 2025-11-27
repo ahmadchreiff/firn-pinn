@@ -2,16 +2,17 @@ experiment_name: firn_default
 runs_dir: runs
 
 model:
-  hidden_layers: [128, 128, 128, 128, 128]
-  dtype: float64
+  hidden_layers: [128, 128, 128, 128]
+  dtype: float32
 
 training:
-  optimizer: lbfgs       # (uses LBFGS directly)
-  epochs: 20000          # if you prefer Adam warmup + LBFGS, see note below
+  optimizer: adam       # run this phase first
+  epochs: 10000
   learning_rate: 1.0e-3
-  n_interior: 8192
-  n_boundary: 512
-  n_initial: 512
+  n_interior: 4096
+  n_boundary: 256
+  n_initial: 256
+  # (optionally add a scheduler in code if you like)
 
 loss:
   w_pde: 2.0
