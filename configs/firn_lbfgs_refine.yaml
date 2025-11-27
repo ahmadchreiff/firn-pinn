@@ -1,4 +1,4 @@
-experiment_name: firn_tight
+experiment_name: firn_lbfgs_refine
 runs_dir: runs
 
 model:
@@ -6,9 +6,9 @@ model:
   dtype: float64
 
 training:
-  optimizer: adam       # Adam warmup; optionally follow with firn_lbfgs_refine.yaml
-  epochs: 10000
-  learning_rate: 1.0e-3
+  optimizer: lbfgs       # refinement after Adam warmup
+  epochs: 1500           # LBFGS steps
+  learning_rate: 5.0e-3
   n_interior: 8192
   n_boundary: 512
   n_initial: 512
