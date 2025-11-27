@@ -7,7 +7,7 @@ model:
 
 training:
   optimizer: adam       # run this phase first
-  epochs: 10000
+  epochs: 5000
   learning_rate: 1.0e-3
   n_interior: 4096
   n_boundary: 256
