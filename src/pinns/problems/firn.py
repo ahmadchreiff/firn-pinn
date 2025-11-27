@@ -33,9 +33,6 @@ class FirnProblem:
         t_max: Optional[float] = None,
         z_min: Optional[float] = None,
         z_max: Optional[float] = None,
-        n_interior: Optional[int] = None,
-        n_boundary: Optional[int] = None,
-        n_initial: Optional[int] = None,
         Te: Optional[float] = None,
         zF: Optional[float] = None,
         f_const: Optional[float] = None,
@@ -60,13 +57,6 @@ class FirnProblem:
             if config is not None:
                 return float(default_cfg)
             return float(fallback)
-
-        def _resolve_count(value: Optional[int], default_cfg: int, fallback: int) -> int:
-            if value is not None:
-                return int(value)
-            if config is not None:
-                return int(default_cfg)
-            return int(fallback)
 
         def _resolve_param(name: str, value: Optional[float], fallback: float) -> float:
             if value is not None:
@@ -96,10 +86,6 @@ class FirnProblem:
         self.t_max = _resolve_bound(t_max, getattr(config, "t_max", 1.0), 1.0)
         self.z_min = _resolve_bound(z_min, getattr(config, "z_min", 0.0), 0.0)
         self.z_max = _resolve_bound(z_max, getattr(config, "z_max", 1.0), 1.0)
-
-        self.n_interior = _resolve_count(n_interior, getattr(config, "n_interior", 1000), 1000)
-        self.n_boundary = _resolve_count(n_boundary, getattr(config, "n_boundary", 200), 200)
-        self.n_initial = _resolve_count(n_initial, getattr(config, "n_initial", 200), 200)
 
         # Physical / model parameters (Table 2 defaults)
         self.Te = _resolve_param("Te", Te, 1.0)

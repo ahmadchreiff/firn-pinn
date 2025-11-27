@@ -60,7 +60,14 @@ def load_or_default_config(path: Optional[Path]) -> Config:
         return load_config(path)
 
     return Config(
-        training=TrainingConfig(epochs=1, seed=42, deterministic=False),
+        training=TrainingConfig(
+            epochs=1,
+            seed=42,
+            deterministic=False,
+            n_interior=64,
+            n_boundary=16,
+            n_initial=16,
+        ),
         model=ModelConfig(type="mlp", in_dim=2, out_dim=1, hidden_layers=[32, 32], activation="tanh"),
         problem=ProblemConfig(
             name="dev_sanity",
@@ -68,9 +75,6 @@ def load_or_default_config(path: Optional[Path]) -> Config:
             t_max=1.0,
             z_min=0.0,
             z_max=1.0,
-            n_interior=64,
-            n_boundary=16,
-            n_initial=16,
         ),
         loss=LossConfig(),
         runs_dir="runs",
@@ -96,7 +100,7 @@ def main() -> None:
         [cfg.problem.z_min, cfg.problem.z_max],
     ]
     in_dim = len(bounds)
-    num_points = max(1, min(args.num_points, cfg.problem.n_interior))
+    num_points = max(1, min(args.num_points, cfg.training.n_interior))
 
     run_dir = create_run_dir(
         experiment=cfg.experiment_name,

@@ -91,7 +91,7 @@ class BasePINN:
     # Loss components
     # ------------------------------------------------------------------
     def _pde_loss(self) -> Tensor:
-        n_int = getattr(self.training, "n_interior", self.problem.n_interior)
+        n_int = self.training.n_interior
         x_int = self.problem.sample_interior(n_int, device=self.device)
         x_int = self._prepare_inputs(x_int)
 
@@ -108,7 +108,7 @@ class BasePINN:
         return torch.mean(r_pde**2)
 
     def _ic_loss(self) -> Tensor:
-        n_init = getattr(self.training, "n_initial", self.problem.n_initial)
+        n_init = self.training.n_initial
         x_ic = self.problem.sample_initial(n_init, device=self.device)
         x_ic = self._prepare_inputs(x_ic)
 
@@ -117,7 +117,7 @@ class BasePINN:
         return torch.mean(r_ic**2)
 
     def _bc_loss(self) -> Tensor:
-        n_bnd = getattr(self.training, "n_boundary", self.problem.n_boundary)
+        n_bnd = self.training.n_boundary
         x_b = self.problem.sample_boundary(n_bnd, device=self.device)
         x_b = self._prepare_inputs(x_b)
 

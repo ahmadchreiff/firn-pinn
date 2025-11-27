@@ -25,6 +25,9 @@ class TrainingConfig:
     checkpoint_every: int = 100
     batch_size: Optional[int] = None
     deterministic: bool = False
+    n_interior: int = 1000
+    n_boundary: int = 200
+    n_initial: int = 200
 
 
 @dataclass
@@ -45,9 +48,6 @@ class ProblemConfig:
     t_max: float = 1.0
     z_min: float = 0.0
     z_max: float = 1.0
-    n_interior: int = 1000
-    n_boundary: int = 200
-    n_initial: int = 200
     parameters: Dict[str, Any] = field(default_factory=dict)
 
 

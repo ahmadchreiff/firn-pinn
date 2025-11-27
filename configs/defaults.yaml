@@ -30,6 +30,3 @@ problem:
   t_max: 1.0
   z_min: 0.0
   z_max: 1.0
-  n_interior: 2048
-  n_boundary: 256
-  n_initial: 256
