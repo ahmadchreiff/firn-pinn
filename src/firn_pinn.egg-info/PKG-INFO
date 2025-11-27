@@ -1,3 +1,16 @@
+Metadata-Version: 2.4
+Name: firn-pinn
+Version: 0.1.0
+Summary: Physics-informed neural network for the rescaled firn gas-diffusion problem.
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: torch>=2.1
+Requires-Dist: numpy>=1.24
+Requires-Dist: matplotlib>=3.7
+Requires-Dist: PyYAML>=6.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+
 # Firn PINN
 
 Physics-informed neural network for the rescaled firn gas-diffusion problem. This repository defines the PDE, sampling, losses, training loop, and plotting utilities to solve for the dimensionless gas density `rho_hat(t_hat, z_hat)` on `[0,1] x [0,1]`.
