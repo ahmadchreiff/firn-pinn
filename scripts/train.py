@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from training import main
+from pinns.utils.training import main
 
 
 if __name__ == "__main__":
