@@ -90,6 +90,7 @@ def main() -> None:
         loss_cfg=cfg.loss,
         device=device,
         logger=logger,
+        run_dir=run_dir,
     )
 
     # 5) Train

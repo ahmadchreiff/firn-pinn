@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Dict, Optional
 
 import logging
@@ -28,11 +29,13 @@ class BasePINN:
         loss_cfg: LossConfig,
         device: Optional[torch.device | str] = None,
         logger: Optional[logging.Logger] = None,
+        run_dir: Optional[Path | str] = None,
     ) -> None:
         self.model = model
         self.problem = problem
         self.training = training
         self.loss_cfg = loss_cfg
+        self.run_dir = Path(run_dir) if run_dir is not None else None
 
         if device is not None:
             self.device = torch.device(device)
@@ -188,6 +191,8 @@ class BasePINN:
                     loss_vals["loss_ic"],
                     loss_vals["loss_bc"],
                 )
+                if self.run_dir is not None:
+                    log_metrics(loss_vals, run_dir=self.run_dir, filename="metrics.csv")
 
     # ------------------------------------------------------------------
     # Prediction
