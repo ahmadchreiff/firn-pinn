@@ -7,15 +7,15 @@ model:
   out_dim: 1
   hidden_layers: [64, 64, 64]
   activation: tanh
-  dtype: float32
+  dtype: float64
   # device: cuda
 
 training:
-  epochs: 5000
+  epochs: 8000
   learning_rate: 1.0e-3
   seed: 42
   deterministic: false
-  n_interior: 2048
+  n_interior: 4096
   n_boundary: 256
   n_initial: 256
 
