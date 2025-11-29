@@ -44,7 +44,6 @@ class MLP(nn.Module):
         out_dim: int,
         hidden_layers: Sequence[int] | Iterable[int],
         activation: str = "tanh",
-        init_fn: Callable[[nn.Module], None] | None = None,
     ) -> None:
         super().__init__()
 
@@ -63,11 +62,9 @@ class MLP(nn.Module):
 
         self.net = nn.Sequential(*layers)
 
-        # Apply initialization if provided; default to Xavier on Linear layers.
-        if init_fn is None:
-            self.apply(_xavier_init)
-        else:
-            self.apply(init_fn)
+        # Default is Xavier initialization on Linear layers.
+        self.apply(_xavier_init)
+        
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
         return self.net(x)
