@@ -8,7 +8,7 @@ import pytest
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
-from pinns.problems.firn import FirnProblem  # noqa: E402
+from pinns.firn import FirnProblem  # noqa: E402
 
 
 @pytest.fixture

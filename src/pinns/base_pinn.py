@@ -9,7 +9,7 @@ import torch
 from torch import Tensor, nn
 
 from pinns.config import Config, LossConfig, TrainingConfig
-from pinns.problems.firn import FirnProblem
+from pinns.firn import FirnProblem
 from pinns.utils.logging import get_logger, log_metrics
 
 __all__ = ["BasePINN"]

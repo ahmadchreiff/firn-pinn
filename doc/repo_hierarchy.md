@@ -14,14 +14,10 @@
 ├── src/
 │   └── pinns/
 │       ├── __init__.py
+│       ├── base_pinn.py          # generalized DirectPINN: sampling, loss aggregation, training loop
 │       ├── config.py             # dataclasses/schemas for training + optimizer configs
-│       ├── models/
-│       │   ├── neural_net.py     # MLP with init, dtype/device handling, activation selection
-│       │   └── factory.py        # helper to build networks from config
-│       ├── core/
-│       │   └── base_pinn.py      # generalized DirectPINN: sampling, loss aggregation, training loop
-│       ├── problems/
-│       │   └── firn.py           # FirnProblem implementing PDE residual + BCs + constants
+│       ├── firn.py               # FirnProblem implementing PDE residual + BCs + constants
+│       ├── models.py             # MLP with init, dtype/device handling, activation selection, and builder
 │       └── utils/
 │           ├── sampling.py       # Sobol/LHS point generation, domain mapping
 │           ├── plotting.py       # training curves, solution scatter/heatmaps (headless-safe)

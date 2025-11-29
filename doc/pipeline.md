@@ -6,7 +6,7 @@ This project compares a physics‐informed neural network (PINN) against the cla
 - PINN training:
   - Configs: `configs/defaults.yaml` (baseline), `configs/firn_tight.yaml` (heavier training/capacity).
   - Trainer: `pinns.utils.training` (entry via `python -m pinns.utils.training` or `scripts/train.py`).
-  - Core classes: `src/pinns/core/base_pinn.py`, `src/pinns/problems/firn.py`, `src/pinns/models/` (MLP).
+  - Core classes: `src/pinns/base_pinn.py`, `src/pinns/firn.py`, `src/pinns/models.py` (MLP).
   - Outputs: timestamped run dir under `runs/` with `model.pt` (checkpoint) and logs.
 - Classical solver:
   - MATLAB code in `classical_solver/` (esp. `GenerateFirnData.m`).
@@ -38,7 +38,7 @@ This project compares a physics‐informed neural network (PINN) against the cla
    - The script loads the `.mat`, builds the PINN model matching the config, evaluates on the same grid, and saves the side‑by‑side heatmap.
 
 ## File map (what matters)
-- Training: `src/pinns/core/base_pinn.py`, `src/pinns/problems/firn.py`, `src/pinns/models/`, `src/pinns/utils/training.py`, `configs/*.yaml`.
+- Training: `src/pinns/base_pinn.py`, `src/pinns/firn.py`, `src/pinns/models.py`, `src/pinns/utils/training.py`, `configs/*.yaml`.
 - Classical solver: `classical_solver/GenerateFirnData.m` (+ its helper .m files).
 - Comparison: `compare_firn_solutions.py` (uses the PINN checkpoint and the `.mat`).
 - Outputs: `runs/<name>/model.pt`, `data/raw/firn_forward.mat`, `comparison.png`.

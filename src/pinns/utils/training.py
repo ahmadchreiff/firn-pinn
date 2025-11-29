@@ -7,9 +7,9 @@ import torch
 from torch import nn
 
 from pinns.config import Config, load_config
-from pinns.models.factory import build_model
-from pinns.problems.firn import FirnProblem
-from pinns.core.base_pinn import BasePINN
+from pinns.models import build_model
+from pinns.firn import FirnProblem
+from pinns.base_pinn import BasePINN
 from pinns.utils.logging import create_run_dir, configure_logger
 from pinns.utils.seed import seed_from_env
 

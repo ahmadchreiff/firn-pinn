@@ -9,9 +9,9 @@ import pytest
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
 from pinns.config import LossConfig, ModelConfig, TrainingConfig  # noqa: E402
-from pinns.core.base_pinn import BasePINN  # noqa: E402
-from pinns.models.neural_net import MLP  # noqa: E402
-from pinns.problems.firn import FirnProblem  # noqa: E402
+from pinns.base_pinn import BasePINN  # noqa: E402
+from pinns.models import MLP  # noqa: E402
+from pinns.firn import FirnProblem  # noqa: E402
 
 
 @pytest.fixture

@@ -27,8 +27,8 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from pinns.config import load_config
-from pinns.models.factory import build_model
-from pinns.problems.firn import FirnProblem
+from pinns.models import build_model
+from pinns.firn import FirnProblem
 
 
 def _require_scipy_loadmat():

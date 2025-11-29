@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import torch
 from torch import Tensor, nn
 
-from pinns.problems.firn import FirnProblem
+from pinns.firn import FirnProblem
 
 __all__ = [
     "plot_losses",

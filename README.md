@@ -33,9 +33,9 @@ See `configs/defaults.yaml` for the standard experiment setup (MLP, sampling cou
 
 - `scripts/train.py` or `python -m pinns.utils.training`: thin entrypoints; load config, build model/problem, run training, save checkpoint.
 - `configs/`: YAML configs for experiments.
-- `src/pinns/problems/firn.py`: FirnProblem with domain, sampling, coefficient profiles, and PDE/BC/IC residuals.
-- `src/pinns/core/base_pinn.py`: PINN wrapper to assemble losses, compute autograd derivatives, and train (Adam or LBFGS).
-- `src/pinns/models/`: MLP and factory.
+- `src/pinns/firn.py`: FirnProblem with domain, sampling, coefficient profiles, and PDE/BC/IC residuals.
+- `src/pinns/base_pinn.py`: PINN wrapper to assemble losses, compute autograd derivatives, and train (Adam or LBFGS).
+- `src/pinns/models.py`: MLP and model builder.
 - `src/pinns/utils/`: sampling, logging, plotting, training helper, seeding.
 - `tests/`: pytest sanity checks for sampling, firn problem, and loss/training plumbing.
 
