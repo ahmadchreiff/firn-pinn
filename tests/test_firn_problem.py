@@ -18,17 +18,14 @@ def problem() -> FirnProblem:
 
 def test_coefficients_shapes_and_finiteness(problem: FirnProblem):
     z = torch.linspace(problem.z_min, problem.z_max, 5).reshape(-1, 1)
-    coeffs = [
-        problem.f(z),
-        problem.v(z),
-        problem.w_air(z),
-        problem.tau(z),
-        problem.lambda_(z),
-        problem.D_tilde(z),
-    ]
-    for c in coeffs:
-        assert c.shape == z.shape
-        assert torch.isfinite(c).all()
+    D = problem.diffusivity(z)
+    assert D.shape == z.shape
+    assert torch.isfinite(D).all()
+    assert problem.f_const > 0 and problem.adv_velocity > 0 and problem.sink_rate > 0
+    t = torch.linspace(problem.t_min, problem.t_max, 3).reshape(-1, 1)
+    rho_top = problem.rho_atm(t)
+    assert rho_top.shape == t.shape
+    assert torch.isfinite(rho_top).all()
 
 
 def test_pde_residual_shape_and_finiteness(problem: FirnProblem):
